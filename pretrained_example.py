@@ -15,9 +15,16 @@ import dnnlib
 import dnnlib.tflib as tflib
 import config
 
+def parse_args():
+    parser = argparse.ArgumentParser('Stylegan')
+    parser.add_argument('--gpu', type=str, default='0', help='GPU to use [default: GPU 0]')
+    return parser.parse_args()
+
 def main():
     # Initialize TensorFlow.
     tflib.init_tf()
+    args = parse_args()
+    os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
     # Load pre-trained network.
     path = "./karras_pretrained-1024x1024.pkl" # karras2019stylegan-ffhq-1024x1024.pkl
